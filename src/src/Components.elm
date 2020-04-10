@@ -5,6 +5,7 @@ import Element exposing (..)
 import Element.Background as Background
 import Element.Border as Border
 import Element.Font as Font
+import Element.Region as Region
 import Generated.Route as Route exposing (Route)
 
 
@@ -23,22 +24,27 @@ layout { page } =
 
 navbar : Element msg
 navbar =
-    row [ width fill ]
-        [ el [ Font.size 24, Font.bold ] <| link ( "home", Route.Top )
-        , row [ alignRight, spacing 20 ]
-            [ link ( "docs", Route.Docs )
-            , link ( "a broken link", Route.NotFound )
-            , externalButtonLink ( "tweet about it", "https://twitter.com/intent/tweet?text=elm-spa is ez pz" )
+    row [ Region.navigation, width fill ]
+        [ row [ Element.alignLeft ]
+            [ internalLink ( "CrawfordC.com", Route.Top )
+            , externalLink ( "book", "https://book.CrawfordC.com" )
+            , internalLink ( "a broken link", Route.NotFound )
+
+            --    , externalButtonLink ( "tweet about it", "https://twitter.com/intent/tweet?text=elm-spa is ez pz" )
             ]
         ]
 
-
-link : ( String, Route ) -> Element msg
-link ( label, route ) =
+internalLink : ( String, Route ) -> Element msg
+internalLink ( label, route ) =
     Element.link styles.link
         { label = text label
         , url = Route.toHref route
         }
+externalLink : (String,String) -> Element msg
+externalLink (label,url) =
+    Element.newTabLink styles.link
+        {label = text label
+        , url = url}
 
 
 externalButtonLink : ( String, String ) -> Element msg
@@ -75,6 +81,10 @@ styles =
         [ Font.underline
         , Font.color colors.blue
         , mouseOver [ alpha 0.6 ]
+        , Border.width 1
+        , Border.roundEach({topLeft=9,topRight=0,bottomLeft=0,bottomRight=0})
+        , Element.padding 5
+       
         ]
     , button =
         [ Font.color colors.white

@@ -1,8 +1,8 @@
 module Pages.NotFound exposing (Flags, Model, Msg, page)
 
+import Element
 import Html
 import Page exposing (Document, Page)
-import Element
 
 
 type alias Flags =
