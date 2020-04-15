@@ -4,6 +4,8 @@ import Element
 import Html
 import Http
 import Page exposing (Document, Page)
+import Json.Decode as Decode exposing (Decoder, int, string, float)
+import Json.Decode.Pipeline exposing (required)
 
 
 type alias Flags =
@@ -12,9 +14,11 @@ type alias Flags =
 
 type Model
     = Loading
-    | Success String
+    | Success TestResponse
     | Failure
 
+type alias TestResponse =
+    {title: String}
 
 page : Page Flags Model Msg
 page =
@@ -30,18 +34,22 @@ init : () -> ( Model, Cmd Msg )
 init _ =
     ( Loading
     , Http.get
-        { url = "https://elm-lang.org/assets/public-opinion.txt"
-        , expect = Http.expectJson GotData
+        { url = "/api/github"
+        , expect = Http.expectJson GotData testDecoder
         }
     )
 
+testDecoder : Decoder TestResponse
+testDecoder =
+    Decode.succeed TestResponse
+    |> required "title"  string
 
 
 -- UPDATE
 
 
 type Msg
-    = GotData (Result Http.Error String)
+    = GotData (Result Http.Error TestResponse)
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
@@ -49,8 +57,8 @@ update msg model =
     case msg of
         GotData result ->
             case result of
-                Ok fullText ->
-                    ( Success fullText, Cmd.none )
+                Ok resp ->
+                    ( Success resp, Cmd.none )
 
                 Err _ ->
                     ( Failure, Cmd.none )
