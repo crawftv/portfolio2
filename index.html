@@ -5870,6 +5870,7 @@ var $elm$url$Url$Parser$parse = F2(
 					$elm$core$Basics$identity)));
 	});
 var $author$project$Generated$Route$Docs = {$: 'Docs'};
+var $author$project$Generated$Route$Github = {$: 'Github'};
 var $author$project$Generated$Route$Top = {$: 'Top'};
 var $elm$url$Url$Parser$Parser = function (a) {
 	return {$: 'Parser', a: a};
@@ -5975,6 +5976,10 @@ var $author$project$Generated$Route$routes = $elm$url$Url$Parser$oneOf(
 			$elm$url$Url$Parser$s('docs')),
 			A2(
 			$elm$url$Url$Parser$map,
+			$author$project$Generated$Route$Github,
+			$elm$url$Url$Parser$s('github')),
+			A2(
+			$elm$url$Url$Parser$map,
 			$author$project$Generated$Route$NotFound,
 			$elm$url$Url$Parser$s('not-found'))
 		]));
@@ -5997,6 +6002,12 @@ var $author$project$Generated$Pages$Docs_Model = function (a) {
 };
 var $author$project$Generated$Pages$Docs_Msg = function (a) {
 	return {$: 'Docs_Msg', a: a};
+};
+var $author$project$Generated$Pages$Github_Model = function (a) {
+	return {$: 'Github_Model', a: a};
+};
+var $author$project$Generated$Pages$Github_Msg = function (a) {
+	return {$: 'Github_Msg', a: a};
 };
 var $author$project$Generated$Pages$NotFound_Model = function (a) {
 	return {$: 'NotFound_Model', a: a};
@@ -6049,6 +6060,15 @@ var $author$project$Pages$Docs$view = {
 };
 var $author$project$Pages$Docs$page = $author$project$Page$static(
 	{view: $author$project$Pages$Docs$view});
+var $author$project$Pages$Github$view = {
+	body: _List_fromArray(
+		[
+			$mdgriffith$elm_ui$Element$text('Github')
+		]),
+	title: 'Github'
+};
+var $author$project$Pages$Github$page = $author$project$Page$static(
+	{view: $author$project$Pages$Github$view});
 var $author$project$Pages$NotFound$view = {
 	body: _List_fromArray(
 		[
@@ -11810,6 +11830,7 @@ var $ryannhg$elm_spa$Spa$Advanced$upgrade = F4(
 var $author$project$Page$upgrade = $ryannhg$elm_spa$Spa$Advanced$upgrade($author$project$Document$map);
 var $author$project$Generated$Pages$pages = {
 	docs: A3($author$project$Page$upgrade, $author$project$Generated$Pages$Docs_Model, $author$project$Generated$Pages$Docs_Msg, $author$project$Pages$Docs$page),
+	github: A3($author$project$Page$upgrade, $author$project$Generated$Pages$Github_Model, $author$project$Generated$Pages$Github_Msg, $author$project$Pages$Github$page),
 	notFound: A3($author$project$Page$upgrade, $author$project$Generated$Pages$NotFound_Model, $author$project$Generated$Pages$NotFound_Msg, $author$project$Pages$NotFound$page),
 	top: A3($author$project$Page$upgrade, $author$project$Generated$Pages$Top_Model, $author$project$Generated$Pages$Top_Msg, $author$project$Pages$Top$page)
 };
@@ -11819,6 +11840,8 @@ var $author$project$Generated$Pages$init = function (route) {
 			return $author$project$Generated$Pages$pages.top.init(_Utils_Tuple0);
 		case 'Docs':
 			return $author$project$Generated$Pages$pages.docs.init(_Utils_Tuple0);
+		case 'Github':
+			return $author$project$Generated$Pages$pages.github.init(_Utils_Tuple0);
 		default:
 			return $author$project$Generated$Pages$pages.notFound.init(_Utils_Tuple0);
 	}
@@ -11863,6 +11886,9 @@ var $author$project$Generated$Pages$bundle = function (bigModel) {
 		case 'Docs_Model':
 			var model = bigModel.a;
 			return $author$project$Generated$Pages$pages.docs.bundle(model);
+		case 'Github_Model':
+			var model = bigModel.a;
+			return $author$project$Generated$Pages$pages.github.bundle(model);
 		default:
 			var model = bigModel.a;
 			return $author$project$Generated$Pages$pages.notFound.bundle(model);
@@ -11944,7 +11970,7 @@ var $elm$url$Url$toString = function (url) {
 var $author$project$Generated$Pages$update = F2(
 	function (bigMsg, bigModel) {
 		var _v0 = _Utils_Tuple2(bigMsg, bigModel);
-		_v0$3:
+		_v0$4:
 		while (true) {
 			switch (_v0.a.$) {
 				case 'Top_Msg':
@@ -11953,7 +11979,7 @@ var $author$project$Generated$Pages$update = F2(
 						var model = _v0.b.a;
 						return A2($author$project$Generated$Pages$pages.top.update, msg, model);
 					} else {
-						break _v0$3;
+						break _v0$4;
 					}
 				case 'Docs_Msg':
 					if (_v0.b.$ === 'Docs_Model') {
@@ -11961,7 +11987,15 @@ var $author$project$Generated$Pages$update = F2(
 						var model = _v0.b.a;
 						return A2($author$project$Generated$Pages$pages.docs.update, msg, model);
 					} else {
-						break _v0$3;
+						break _v0$4;
+					}
+				case 'Github_Msg':
+					if (_v0.b.$ === 'Github_Model') {
+						var msg = _v0.a.a;
+						var model = _v0.b.a;
+						return A2($author$project$Generated$Pages$pages.github.update, msg, model);
+					} else {
+						break _v0$4;
 					}
 				default:
 					if (_v0.b.$ === 'NotFound_Model') {
@@ -11969,7 +12003,7 @@ var $author$project$Generated$Pages$update = F2(
 						var model = _v0.b.a;
 						return A2($author$project$Generated$Pages$pages.notFound.update, msg, model);
 					} else {
-						break _v0$3;
+						break _v0$4;
 					}
 			}
 		}
@@ -11985,6 +12019,9 @@ var $author$project$Generated$Route$toHref = function (route) {
 			case 'Docs':
 				return _List_fromArray(
 					['docs']);
+			case 'Github':
+				return _List_fromArray(
+					['github']);
 			default:
 				return _List_fromArray(
 					['not-found']);
@@ -12806,7 +12843,9 @@ var $author$project$Components$navbar = A2(
 					$author$project$Components$externalLink(
 					_Utils_Tuple2('book', 'https://book.CrawfordC.com')),
 					$author$project$Components$internalLink(
-					_Utils_Tuple2('a broken link', $author$project$Generated$Route$NotFound))
+					_Utils_Tuple2('Github', $author$project$Generated$Route$Github)),
+					$author$project$Components$externalLink(
+					_Utils_Tuple2('Résumé', 'https://resume.creddle.io/resume/9l4nm5phwtj'))
 				]))
 		]));
 var $author$project$Components$layout = function (_v0) {

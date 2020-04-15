@@ -28,11 +28,13 @@ navbar =
         [ row [ Element.alignLeft ]
             [ internalLink ( "CrawfordC.com", Route.Top )
             , externalLink ( "book", "https://book.CrawfordC.com" )
-            , internalLink ( "a broken link", Route.NotFound )
+            , internalLink ( "Github", Route.Github )
+            , externalLink ( "Résumé", "https://resume.creddle.io/resume/9l4nm5phwtj" )
 
             --    , externalButtonLink ( "tweet about it", "https://twitter.com/intent/tweet?text=elm-spa is ez pz" )
             ]
         ]
+
 
 internalLink : ( String, Route ) -> Element msg
 internalLink ( label, route ) =
@@ -40,11 +42,14 @@ internalLink ( label, route ) =
         { label = text label
         , url = Route.toHref route
         }
-externalLink : (String,String) -> Element msg
-externalLink (label,url) =
+
+
+externalLink : ( String, String ) -> Element msg
+externalLink ( label, url ) =
     Element.newTabLink styles.link
-        {label = text label
-        , url = url}
+        { label = text label
+        , url = url
+        }
 
 
 externalButtonLink : ( String, String ) -> Element msg
@@ -82,9 +87,8 @@ styles =
         , Font.color colors.blue
         , mouseOver [ alpha 0.6 ]
         , Border.width 1
-        , Border.roundEach({topLeft=9,topRight=0,bottomLeft=0,bottomRight=0})
+        , Border.roundEach { topLeft = 9, topRight = 0, bottomLeft = 0, bottomRight = 0 }
         , Element.padding 5
-       
         ]
     , button =
         [ Font.color colors.white
