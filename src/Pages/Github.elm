@@ -86,5 +86,5 @@ view model =
 
         Success data ->
             { title = "Github"
-            , body = [ Element.text "" ]
+            , body = [ Element.text data.title]
             }
