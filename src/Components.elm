@@ -1,4 +1,4 @@
-module Components exposing (layout)
+module Components exposing (layout, vl_horizontal_statistic, vl_vertical_statistic)
 
 import Document exposing (Document)
 import Element exposing (..)
@@ -66,7 +66,48 @@ footer =
 
 
 
+-- VALUE label Horizontal Statistic
+
+
+vl_horizontal_statistic : ( String, String ) -> Element msg
+vl_horizontal_statistic ( label, value ) =
+    Element.row [ Font.family [ Font.monospace ], Element.spacing 5 ]
+        [ Element.el
+              [ Font.bold
+              , Font.size (round (scaled 4))
+              ]
+              (Element.text value)
+        , Element.el
+            [Font.size (round (scaled 1))
+            , Element.centerY
+            ]
+            (Element.text label)
+        ]
+
+
+vl_vertical_statistic : ( String, String ) -> Element msg
+vl_vertical_statistic ( label, value ) =
+    Element.column [ Font.family [ Font.monospace ], Element.spacing 3 ]
+        [ Element.el
+              [ Font.bold
+              , Font.size (round (scaled 4))
+              , Element.centerX
+              ]
+              (Element.text value)
+        , Element.el
+            [ Font.size (round (scaled 1))
+            , Font.medium
+            ]
+            (Element.text label)
+        ]
+
+
+
 -- STYLES
+
+
+scaled =
+    Element.modular 16 1.25
 
 
 colors : { blue : Color, white : Color, red : Color }

@@ -1,11 +1,12 @@
 module Pages.Github exposing (Flags, Model, Msg, page)
 
+import Components exposing (vl_horizontal_statistic, vl_vertical_statistic)
 import Element
 import Html
 import Http
-import Page exposing (Document, Page)
-import Json.Decode as Decode exposing (Decoder, int, string, float)
+import Json.Decode as Decode exposing (Decoder, float, int, string)
 import Json.Decode.Pipeline exposing (required)
+import Page exposing (Document, Page)
 
 
 type alias Flags =
@@ -17,9 +18,11 @@ type Model
     | Success TestResponse
     | Failure
 
+
 type alias TestResponse =
-    {
-     repo_count: Int}
+    { repo_count : Int
+    }
+
 
 page : Page Flags Model Msg
 page =
@@ -40,10 +43,12 @@ init _ =
         }
     )
 
+
 testDecoder : Decoder TestResponse
 testDecoder =
     Decode.succeed TestResponse
-    |> required "repo_count" int
+        |> required "repo_count" int
+
 
 
 -- UPDATE
@@ -65,10 +70,16 @@ update msg model =
                     ( Failure, Cmd.none )
 
 
+
 -- SUBSCRIPTION
+
+
 subscriptions : Model -> Sub Msg
 subscriptions model =
-  Sub.none
+    Sub.none
+
+
+
 -- VIEW
 
 
@@ -77,7 +88,10 @@ view model =
     case model of
         Failure ->
             { title = "Failure"
-            , body = [ Element.text "Failed to load data" ]
+            , body =
+                [
+                 vl_vertical_statistic ( "Repos", "90" )
+                ]
             }
 
         Loading ->
@@ -87,5 +101,7 @@ view model =
 
         Success data ->
             { title = "Github"
-            , body = [ Element.text "Repo_Count", Element.text (String.fromInt data.repo_count)]
+            , body =
+                [ vl_vertical_statistic ( "Number of Repos", String.fromInt data.repo_count )
+                ]
             }
