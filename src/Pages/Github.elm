@@ -18,7 +18,8 @@ type Model
     | Failure
 
 type alias TestResponse =
-    {title: String}
+    {
+     repo_count: Int}
 
 page : Page Flags Model Msg
 page =
@@ -42,7 +43,7 @@ init _ =
 testDecoder : Decoder TestResponse
 testDecoder =
     Decode.succeed TestResponse
-    |> required "title"  string
+    |> required "repo_count" int
 
 
 -- UPDATE
@@ -86,5 +87,5 @@ view model =
 
         Success data ->
             { title = "Github"
-            , body = [ Element.text data.title]
+            , body = [ Element.text "Repo_Count", Element.text (String.fromInt data.repo_count)]
             }

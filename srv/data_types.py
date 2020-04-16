@@ -3,27 +3,11 @@
 from dataclasses import dataclass
 from typing import Dict, Any
 import dateutil.parser
-from pony.orm import Database, Required, PrimaryKey
-
-db = Database()
-db.bind(provider='sqlite', filename='portfolio.db')
-db.generate_mapping()
 
 def ISO_to_unix(string):
     t = dateutil.parser.parse(string).timestamp()
     return t
 
-class Repo(db.Entity):
-    id = PrimaryKey(int)
-    node_id = Required(str)
-    name  = Required(str)
-    full_name = Required(str)
-    private = Required(bool)
-    html_url  = Required(str)
-    description = Required(str)
-    pushed_at_unix  = Required(float)
-    updated_at_unix = Required(float)
-    created_at_unix = Required(float)
 
 
 # Github API Response types

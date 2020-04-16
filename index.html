@@ -6535,9 +6535,10 @@ var $elm$http$Http$get = function (r) {
 	return $elm$http$Http$request(
 		{body: $elm$http$Http$emptyBody, expect: r.expect, headers: _List_Nil, method: 'GET', timeout: $elm$core$Maybe$Nothing, tracker: $elm$core$Maybe$Nothing, url: r.url});
 };
-var $author$project$Pages$Github$TestResponse = function (title) {
-	return {title: title};
+var $author$project$Pages$Github$TestResponse = function (repo_count) {
+	return {repo_count: repo_count};
 };
+var $elm$json$Json$Decode$int = _Json_decodeInt;
 var $NoRedInk$elm_json_decode_pipeline$Json$Decode$Pipeline$custom = $elm$json$Json$Decode$map2($elm$core$Basics$apR);
 var $elm$json$Json$Decode$field = _Json_decodeField;
 var $NoRedInk$elm_json_decode_pipeline$Json$Decode$Pipeline$required = F3(
@@ -6547,11 +6548,10 @@ var $NoRedInk$elm_json_decode_pipeline$Json$Decode$Pipeline$required = F3(
 			A2($elm$json$Json$Decode$field, key, valDecoder),
 			decoder);
 	});
-var $elm$json$Json$Decode$string = _Json_decodeString;
 var $author$project$Pages$Github$testDecoder = A3(
 	$NoRedInk$elm_json_decode_pipeline$Json$Decode$Pipeline$required,
-	'title',
-	$elm$json$Json$Decode$string,
+	'repo_count',
+	$elm$json$Json$Decode$int,
 	$elm$json$Json$Decode$succeed($author$project$Pages$Github$TestResponse));
 var $author$project$Pages$Github$init = function (_v0) {
 	return _Utils_Tuple2(
@@ -6604,7 +6604,8 @@ var $author$project$Pages$Github$view = function (model) {
 			return {
 				body: _List_fromArray(
 					[
-						$mdgriffith$elm_ui$Element$text(data.title)
+						$mdgriffith$elm_ui$Element$text(
+						$elm$core$String$fromInt(data.repo_count))
 					]),
 				title: 'Github'
 			};

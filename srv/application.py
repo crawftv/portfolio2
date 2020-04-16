@@ -2,8 +2,9 @@
 import falcon
 from falcon_jinja2 import FalconTemplate
 import ujson
-from pony.orm import select, count
-from .data_types import Repo, db
+import sqlite3
+
+
 api = application = falcon.API()
 falcon_template = FalconTemplate(path=".")
 
@@ -21,10 +22,10 @@ application.add_route("/",home)
 
 class Github(object):
     def on_get(self, req,resp):
-        import pdb;pdb.set_trace()
-        doc = {"title":"Github"}
-        query = select(count(r) for r in Repo)
-        print(query)
+        doc = {}
+        with sqlite3.connect("srv/portfolio.db") as c:
+            query = c.cursor().execute("SELECT COUNT(*) from repos").fetchone()[0]
+            doc["repo_count"] = query
         resp.body = ujson.dumps(doc,ensure_ascii=False)
         resp.status = falcon.HTTP_200
 
