@@ -4,10 +4,16 @@ from dataclasses import dataclass
 from typing import Dict, Any
 import dateutil.parser
 
+
 def ISO_to_unix(string):
     t = dateutil.parser.parse(string).timestamp()
     return t
 
+
+def ymd_date_string(string):
+    dd = dateutil.parser.parse(string)
+    f = f"{dd.year}-{dd.month:02d}-{dd.day:02d}"
+    return f
 
 
 # Github API Response types
@@ -19,7 +25,7 @@ class EventResponse:
     repo: Dict
     payload: Dict
     public: bool
-    created_at : str
+    created_at: str
 
     @property
     def created_at_unix(self):
@@ -29,29 +35,34 @@ class EventResponse:
     def repo_id(self):
         return self.repo["id"]
 
+    @property
+    def created_at_ymd(self):
+        return ymd_date_string(self.created_at)
+
+
 @dataclass
 class RepoResponse:
     id: int
-    node_id : str
-    name : str
-    full_name : str
-    private : bool
-    owner : Dict
-    html_url : str
-    description : str
-    fork : bool
-    url : str
-    forks_url : str
-    keys_url : str
-    collaborators_url : str
-    teams_url : str
+    node_id: str
+    name: str
+    full_name: str
+    private: bool
+    owner: Dict
+    html_url: str
+    description: str
+    fork: bool
+    url: str
+    forks_url: str
+    keys_url: str
+    collaborators_url: str
+    teams_url: str
     hooks_url: str
-    issue_events_url : str
+    issue_events_url: str
     events_url: str
-    assignees_url : str
+    assignees_url: str
     branches_url: str
     tags_url: str
-    blobs_url :str
+    blobs_url: str
     git_tags_url: str
     git_refs_url: str
     trees_url: str
@@ -93,7 +104,7 @@ class RepoResponse:
     has_projects: bool
     has_downloads: bool
     has_wiki: bool
-    has_pages:bool
+    has_pages: bool
     forks_count: int
     mirror_url: Any
     archived: bool

@@ -1,11 +1,13 @@
 module Pages.Github exposing (Flags, Model, Msg, page)
 
 import Components exposing (vl_horizontal_statistic, vl_vertical_statistic)
+import Debug
 import Element
 import Html
 import Http
-import Json.Decode as Decode exposing (Decoder, float, int, string)
+import Json.Decode as Decode exposing (Decoder, dict, float, int, list, string)
 import Json.Decode.Pipeline exposing (required)
+import LineChart
 import Page exposing (Document, Page)
 
 
@@ -15,12 +17,20 @@ type alias Flags =
 
 type Model
     = Loading
-    | Success TestResponse
+    | Success APIResponse
     | Failure
 
 
-type alias TestResponse =
+type alias APIResponse =
     { repo_count : Int
+    , event_list : List Event
+    }
+
+
+type alias Event =
+    { created_at : String
+    , event_count : Float
+    , unix_time : Float
     }
 
 
@@ -39,15 +49,24 @@ init _ =
     ( Loading
     , Http.get
         { url = "/api/github"
-        , expect = Http.expectJson GotData testDecoder
+        , expect = Http.expectJson GotData responseDecoder
         }
     )
 
 
-testDecoder : Decoder TestResponse
-testDecoder =
-    Decode.succeed TestResponse
+responseDecoder : Decoder APIResponse
+responseDecoder =
+    Decode.succeed APIResponse
         |> required "repo_count" int
+        |> required "event_by_date" (list eventDecoder)
+
+
+eventDecoder : Decoder Event
+eventDecoder =
+    Decode.succeed Event
+        |> required "created_at_ymd" string
+        |> required "event_count" float
+        |> required "unix_time" float
 
 
 
@@ -55,7 +74,7 @@ testDecoder =
 
 
 type Msg
-    = GotData (Result Http.Error TestResponse)
+    = GotData (Result Http.Error APIResponse)
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
@@ -89,8 +108,7 @@ view model =
         Failure ->
             { title = "Failure"
             , body =
-                [
-                 vl_vertical_statistic ( "Repos", "90" )
+                [ vl_vertical_statistic ( "Repos", "90" )
                 ]
             }
 
@@ -103,5 +121,7 @@ view model =
             { title = "Github"
             , body =
                 [ vl_vertical_statistic ( "Number of Repos", String.fromInt data.repo_count )
+                , Element.html
+                    (LineChart.view1 .unix_time .event_count data.event_list)
                 ]
             }

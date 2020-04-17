@@ -73,12 +73,12 @@ vl_horizontal_statistic : ( String, String ) -> Element msg
 vl_horizontal_statistic ( label, value ) =
     Element.row [ Font.family [ Font.monospace ], Element.spacing 5 ]
         [ Element.el
-              [ Font.bold
-              , Font.size (round (scaled 4))
-              ]
-              (Element.text value)
+            [ Font.bold
+            , Font.size (round (scaled 4))
+            ]
+            (Element.text value)
         , Element.el
-            [Font.size (round (scaled 1))
+            [ Font.size (round (scaled 1))
             , Element.centerY
             ]
             (Element.text label)
@@ -89,11 +89,11 @@ vl_vertical_statistic : ( String, String ) -> Element msg
 vl_vertical_statistic ( label, value ) =
     Element.column [ Font.family [ Font.monospace ], Element.spacing 3 ]
         [ Element.el
-              [ Font.bold
-              , Font.size (round (scaled 4))
-              , Element.centerX
-              ]
-              (Element.text value)
+            [ Font.bold
+            , Font.size (round (scaled 4))
+            , Element.centerX
+            ]
+            (Element.text value)
         , Element.el
             [ Font.size (round (scaled 1))
             , Font.medium
