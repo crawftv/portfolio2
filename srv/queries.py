@@ -35,7 +35,7 @@ create_events = """
      created_at_ymd text
      )"""
 
-create_aggregate_events ="""
+create_aggregate_events = """
      CREATE TABLE aggregate_events
      (created_at_ymd text PRIMARY KEY,
      event_count int DEFAULT 0,

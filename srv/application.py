@@ -23,10 +23,13 @@ application.add_route("/", home)
 class Github(object):
     def __init__(self):
         self.db = "file:srv/portfolio.db?mode=ro"
+
     def on_get(self, req, resp):
         doc = {}
         with sqlite3.connect(self.db, uri=True) as conn:
-            conn.row_factory = lambda c, r: dict(zip([col[0] for col in c.description], r))
+            conn.row_factory = lambda c, r: dict(
+                zip([col[0] for col in c.description], r)
+            )
             query_repo_count = conn.cursor().execute(query.repo_count).fetchone()
             doc["repo_count"] = query_repo_count["RepoCount"]
             query_event_by_date = conn.cursor().execute(query.event_by_date).fetchall()
