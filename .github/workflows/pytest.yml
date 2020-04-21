@@ -38,4 +38,10 @@ jobs:
         pip3 install jinja2
         python3 -m pip install -r "test-requirements.txt"
     - name: Test
-      run: python3 -m pytest srv/ --black --cov=srv/
+      run: coverage run -m pytest tests/ --black --cov=srv/
+    - name: Upload coverage to Codecov  
+      uses: codecov/codecov-action@v1
+      with:
+        token: ${{ secrets.CODECOV_TOKEN }}
+        file: .coverage
+        fail_ci_if_error: true
