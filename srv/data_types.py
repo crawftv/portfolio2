@@ -1,24 +1,26 @@
 #!/usr/bin/env python3
+import typing
 
 from dataclasses import dataclass
 from typing import Dict, Any
 import dateutil.parser
 
 
-def ISO_to_unix(string):
+def ISO_to_unix(string: str) -> float:
     t = dateutil.parser.parse(string).timestamp()
     return t
 
 
-def ymd_date_string(string):
+def ymd_date_string(string: str) -> str:
     dd = dateutil.parser.parse(string)
     f = f"{dd.year}-{dd.month:02d}-{dd.day:02d}"
     return f
 
 
 # Github API Response types
-@dataclass
+@dataclass(frozen=True)
 class EventResponse:
+    """Data class for handling a Github api response"""
     id: str
     type: str
     actor: Dict
@@ -40,8 +42,9 @@ class EventResponse:
         return ymd_date_string(self.created_at)
 
 
-@dataclass
+@dataclass(frozen=True)
 class RepoResponse:
+    """Data class for handling a Github api response"""
     id: int
     node_id: str
     name: str
