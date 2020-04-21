@@ -20,7 +20,9 @@ def test_RepoResponse():
     r = requests.get(f"{base_url}/users/{user}/repos?sort=pushed")
     repo = RepoResponse(*list(r.json()[0].values()))
     assert repo
-
+    assert repo.created_at_unix
+    assert repo.pushed_at_unix
+    assert repo.updated_at_unix
 
 def test_EventResponse():
     """
@@ -31,6 +33,9 @@ def test_EventResponse():
     r = requests.get(f"{base_url}/users/{user}/events?")
     event = EventResponse(*r.json()[0].values())
     assert event
+    assert event.created_at_unix
+    assert event.repo_id
+    assert event.created_at_ymd
 
 
 @given(
