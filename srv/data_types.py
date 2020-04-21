@@ -21,6 +21,7 @@ def ymd_date_string(string: str) -> str:
 @dataclass(frozen=True)
 class EventResponse:
     """Data class for handling a Github api response"""
+
     id: str
     type: str
     actor: Dict
@@ -45,6 +46,7 @@ class EventResponse:
 @dataclass(frozen=True)
 class RepoResponse:
     """Data class for handling a Github api response"""
+
     id: int
     node_id: str
     name: str
