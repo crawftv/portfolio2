@@ -27,7 +27,8 @@ navbar =
     row [ Region.navigation, width fill ]
         [ row [ Element.alignLeft ]
             [ internalLink ( "CrawfordC.com", Route.Top )
-            , externalLink ( "book", "https://book.CrawfordC.com" )
+            , externalLink ( "Blog", "https://book.CrawfordC.com" )
+            , internalLink ("Book Recommendations", Route.BookRecommendations)
             , internalLink ( "Github", Route.Github )
             , externalLink ( "Résumé", "https://resume.creddle.io/resume/9l4nm5phwtj" )
 
