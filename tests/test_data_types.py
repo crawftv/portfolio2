@@ -24,6 +24,7 @@ def test_RepoResponse():
     assert repo.pushed_at_unix
     assert repo.updated_at_unix
 
+
 def test_EventResponse():
     """
     1. test that this class handles the Event repsponse and creates a data structure
